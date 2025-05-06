@@ -1,17 +1,12 @@
-const { v4: uuid } = require('uuid')
-const multer = require('multer')
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'public/img')
-    },
-    filename(req, file, cb) {
-        let fileName = uuid()
-        const {id} = req.params
-        if (id !== undefined) {
-            fileName = id
-        }
-        cb(null, fileName)
-    }
-})
+const multer = require('multer');
 
-module.exports = multer({storage})
+const storage = multer.diskStorage({
+    destination(req, file, callback) {
+        callback(null, 'public/img');
+    },
+    filename(req, file, callback) {
+        callback(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+
+module.exports = multer({storage});
